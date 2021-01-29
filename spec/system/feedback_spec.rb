@@ -52,4 +52,23 @@ RSpec.describe 'User Feedback', type: :system do
 
     expect(page).to have_text("Your feedback didn't send")
   end
+
+  it 'Captcha is readable in testing env', js: true do
+    visit page_path(slug: 'contact-us')
+
+    expect(page).to have_text('If you are human, ignore this field')
+  end
+
+  it 'Shows an error if the invisible captcha is filled in', js: true do
+    visit page_path(slug: 'contact-us')
+
+    fill_in 'Name', with: 'R2D2'
+    fill_in 'Email', with: 'milesobrien@transporter-rm3.enterprise'
+    fill_in 'Message', with: 'Anybody there?'
+    fill_in 'Captcha', with: 'I am a robot'
+
+    click_on 'Send Feedback'
+
+    expect(page).to have_text("Your feedback didn't send")
+  end
 end
