@@ -144,6 +144,9 @@ en:
         change_sign_url: Go to the entry for this sign in the dictionary and look at the address box. Copy the text and paste here. (e.g. http://nzsl.vuw.ac.nz/signs/1234)
         email: 'If provided, must be a valid email address'
         video: 'Maximum size 50MB &mdash; larger files may take some time to upload'
+  invisible_captcha:
+      sentence_for_humans: "If you are human, ignore this field"
+      timestamp_error_message: "Sorry, that was too quick! Please resubmit."
   admin:
     save: Save
     setting:
