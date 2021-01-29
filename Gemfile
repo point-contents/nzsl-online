@@ -45,6 +45,9 @@ gem 'paperclip'
 gem 'responders', '~> 3.0'
 gem 'videojs_rails'
 
+# For spam filtering on the feedback form
+gem 'invisible_captcha'
+
 # records crashes
 gem 'raygun4ruby'
 
