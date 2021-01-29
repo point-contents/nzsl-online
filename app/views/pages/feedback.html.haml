@@ -75,5 +75,8 @@
         %label.required
           = f.label :message, "Message:"
           = f.text_area :message, rows: "10", class: "message-input"
+      .small-12
+        %label
+          = f.invisible_captcha :captcha, id: "Captcha"
       %input{ type: "hidden", value: @page.id, name: "page_id" }
         = f.submit t("feedback.submit"), class: "send-feedback-button button"
