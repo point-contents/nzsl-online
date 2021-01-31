@@ -2,7 +2,7 @@
 
 class FeedbackController < ApplicationController
   before_action :find_vocab_sheet, :set_search_query, :footer_content
-  invisible_captcha only: :create, honeypot: :captcha, on_spam: :set_form_spam_flag
+  invisible_captcha honeypot: :captcha, on_spam: :set_form_spam_flag
 
   def new
     @feedback = Feedback.new
@@ -11,7 +11,7 @@ class FeedbackController < ApplicationController
   def create
     process_feedback
 
-    @feedback = Feedback.new
+    @feedback = Feedback.new unless @spam
     @page = Page.find(params[:page_id].to_i)
     @title = @page.title
 
@@ -27,7 +27,11 @@ class FeedbackController < ApplicationController
       feedback.send_email
       flash.now[:feedback_notice] = t('feedback.success')
     else
-      flash.now[:feedback_error] = t('feedback.failure')
+      if feedback.valid? && @spam_flag
+        flash.now[:feedback_notice] = t('feedback.success')
+      else
+        flash.now[:feedback_error] = t('feedback.failure')
+      end
     end
   rescue StandardError
     flash.now[:feedback_error] = t('feedback.failure')

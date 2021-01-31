@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'devise'
 
 RSpec.describe 'User Feedback', type: :system do
   before(:all) do
@@ -23,6 +24,7 @@ RSpec.describe 'User Feedback', type: :system do
     click_on 'Send Feedback'
 
     expect(page).to have_text('Your feedback has been sent')
+
   end
 
   it 'Shows an error if required fields are missing', js: true do
@@ -59,7 +61,7 @@ RSpec.describe 'User Feedback', type: :system do
     expect(page).to have_text('If you are human, ignore this field')
   end
 
-  it 'Shows an error if the invisible captcha is filled in', js: true do
+  it 'Shows no error if the invisible captcha is filled in', js: true do
     visit page_path(slug: 'contact-us')
 
     fill_in 'Name', with: 'R2D2'
@@ -69,6 +71,6 @@ RSpec.describe 'User Feedback', type: :system do
 
     click_on 'Send Feedback'
 
-    expect(page).to have_text("Your feedback didn't send")
+    expect(page).to have_text('Your feedback has been sent')
   end
 end
